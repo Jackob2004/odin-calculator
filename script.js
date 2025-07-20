@@ -2,6 +2,28 @@ const calculationState = [];
 let currentOperand = "";
 
 const display = document.querySelector(".display span");
+const keyboardHandler = {
+    keyMap: new Map(),
+    initHandler: function() {
+        for (let i = 0; i < 10; i++) {
+            this.keyMap.set(i.toString(), constructOperand);
+        }
+
+        ["*", "/", "+", "-"].forEach((operator) => this.keyMap.set(operator, addOperator));
+
+        this.keyMap.set("backspace", backspace);
+        this.keyMap.set("escape", clearAll);
+        this.keyMap.set("=", evaluate);
+        this.keyMap.set("enter", evaluate);
+    },
+    handleClick: (event) => {
+        const key = event.key.toLowerCase();
+        if (!keyboardHandler.keyMap.has(key)) return;
+
+        keyboardHandler.keyMap.get(key)(key);
+        populateDisplay();
+    },
+};
 
 function addOperand() {
     if (currentOperand === "") return;
@@ -34,8 +56,7 @@ function addOperator(operator) {
         return;
     }
 
-    addOperand();
-    evaluate();
+    evaluate()
     calculationState.push(operator);
 }
 
@@ -68,6 +89,7 @@ function calculateExpression(a, b, operator) {
 }
 
 function evaluate() {
+    addOperand();
     if (calculationState.length < 3) return;
 
     const b = +calculationState.pop();
@@ -131,7 +153,6 @@ function handleButtonClick(event) {
             backspace();
             break;
         case "btn-eval":
-            addOperand();
             evaluate();
             break;
     }
@@ -145,5 +166,7 @@ function animatePrompt() {
     display.textContent = (display.textContent === "") ? "|" : "";
 }
 
+keyboardHandler.initHandler();
 document.querySelector(".calculator-container").addEventListener("click", handleButtonClick);
+document.body.addEventListener("keyup", keyboardHandler.handleClick);
 setInterval(animatePrompt, 600);
