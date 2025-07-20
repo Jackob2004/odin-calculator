@@ -64,7 +64,7 @@ function calculateExpression(a, b, operator) {
             break;
     }
 
-    return result.toFixed(2);
+    return Number.isInteger(result) ? result : result.toFixed(2);
 }
 
 function evaluate() {
