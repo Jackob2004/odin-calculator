@@ -22,6 +22,7 @@ button {
     background-color: darkgray;
     width: 400px;
     height: 600px;
+    padding: 10px;
 }
 
 .display {
@@ -40,9 +41,9 @@ button {
 }
 
 .buttons-top {
-    padding: 10px;
     display: flex;
     gap: 10px;
+    margin-top: 10px;
 }
 
 .buttons-top .btn-clear {
@@ -59,10 +60,10 @@ button {
 }
 
 .buttons-bottom {
-    padding: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 10px;
 }
 
 .buttons-bottom button {
