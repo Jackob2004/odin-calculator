@@ -21,7 +21,7 @@ function isOperator(value) {
 }
 
 function addOperator(operator) {
-    if (currentOperand === "" && calculationState.length > 0 && isOperator(calculationState.at(-1))) {
+    if (currentOperand === "" && isOperator(calculationState.at(-1))) {
         calculationState[calculationState.length - 1] = operator;
         return;
     }
@@ -40,7 +40,7 @@ function addOperator(operator) {
 }
 
 function constructOperand(input) {
-    if (input === "0" && currentOperand.length === 0) return;
+    if (input === "0" && (currentOperand.length === 0 || isOperator(currentOperand))) return;
 
     if (input.length + currentOperand.length > 17) return;
 
