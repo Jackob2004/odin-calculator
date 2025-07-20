@@ -99,6 +99,23 @@ function populateDisplay() {
     }
 }
 
+function backspace() {
+    if (currentOperand !== "") {
+        currentOperand = currentOperand.substring(0, currentOperand.length - 1);
+        return;
+    }
+
+    if (calculationState.length === 0) return;
+
+    if (isOperator(calculationState.at(-1))) {
+        calculationState.pop();
+        return;
+    }
+
+    const operand = String(calculationState.pop());
+    currentOperand = operand.substring(0, operand.length - 1);
+}
+
 function handleButtonClick(event) {
     switch (event.target.className) {
         case "btn-number":
@@ -109,6 +126,9 @@ function handleButtonClick(event) {
             break;
         case "btn-clear":
             clearAll();
+            break;
+        case "btn-backspace":
+            backspace();
             break;
         case "btn-eval":
             addOperand();

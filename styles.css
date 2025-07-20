@@ -53,8 +53,8 @@ button {
     flex: 1;
 }
 
-.buttons-top .btn-eval {
-    background-color: green;
+.buttons-top .btn-backspace {
+    background-color: orange;
     height: 85px;
     margin-left: auto;
     flex: 1;
@@ -71,6 +71,10 @@ button {
     width: 85px;
     height: 85px;
     flex: auto;
+}
+
+.buttons-bottom .btn-eval {
+    background-color: green;
 }
 
 .btn-operator {
