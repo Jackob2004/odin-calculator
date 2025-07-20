@@ -2,28 +2,6 @@ const calculationState = [];
 let currentOperand = "";
 
 const display = document.querySelector(".display span");
-const keyboardHandler = {
-    keyMap: new Map(),
-    initHandler: function() {
-        for (let i = 0; i < 10; i++) {
-            this.keyMap.set(i.toString(), constructOperand);
-        }
-
-        ["*", "/", "+", "-"].forEach((operator) => this.keyMap.set(operator, addOperator));
-
-        this.keyMap.set("backspace", backspace);
-        this.keyMap.set("escape", clearAll);
-        this.keyMap.set("=", evaluate);
-        this.keyMap.set("enter", evaluate);
-    },
-    handleClick: (event) => {
-        const key = event.key.toLowerCase();
-        if (!keyboardHandler.keyMap.has(key)) return;
-
-        keyboardHandler.keyMap.get(key)(key);
-        populateDisplay();
-    },
-};
 
 function addOperand() {
     if (currentOperand === "") return;
@@ -138,25 +116,39 @@ function backspace() {
     currentOperand = operand.substring(0, operand.length - 1);
 }
 
-function handleButtonClick(event) {
-    switch (event.target.className) {
-        case "btn-number":
-            constructOperand(event.target.textContent);
-            break;
-        case "btn-operator":
-            addOperator(event.target.textContent);
-            break;
-        case "btn-clear":
-            clearAll();
-            break;
-        case "btn-backspace":
-            backspace();
-            break;
-        case "btn-eval":
-            evaluate();
-            break;
+function choseAction(value) {
+    if ((value >= "0" && value <= "9") || value === ".") {
+        constructOperand(value);
+        console.log("test")
+        return;
     }
 
+    if (value === "*" || value === "/" || value === "+" || value === "-") {
+        addOperator(value);
+
+        return;
+    }
+
+    if (value === "escape") {
+        clearAll();
+        return;
+    }
+
+    if (value === "backspace") {
+        backspace();
+        return;
+    }
+
+    if (value === "=") {
+        evaluate();
+    }
+}
+
+function handleInput(value) {
+    if (!value) return;
+
+    const sanitizedValue = value.toLowerCase();
+    choseAction(sanitizedValue)
     populateDisplay();
 }
 
@@ -166,7 +158,6 @@ function animatePrompt() {
     display.textContent = (display.textContent === "") ? "|" : "";
 }
 
-keyboardHandler.initHandler();
-document.querySelector(".calculator-container").addEventListener("click", handleButtonClick);
-document.body.addEventListener("keyup", keyboardHandler.handleClick);
+document.querySelector(".calculator-container").addEventListener("click", (e) => handleInput(e.target.dataset.value));
+document.body.addEventListener("keyup", (e) => handleInput(e.key));
 setInterval(animatePrompt, 600);
