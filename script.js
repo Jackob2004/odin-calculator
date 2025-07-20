@@ -83,11 +83,6 @@ function clearAll() {
 }
 
 function populateDisplay() {
-    if (currentOperand === "" && calculationState.length === 0) {
-        display.textContent = "|";
-        return;
-    }
-
     const expressionText = calculationState.reduce((prev, curr) => prev + curr, "");
     let displayText = expressionText + currentOperand;
 
@@ -96,6 +91,10 @@ function populateDisplay() {
     }
 
     display.textContent = displayText;
+
+    if (displayText.length >= 14) {
+        display.scrollTo({left: display.scrollWidth, behavior: "instant" });
+    }
 }
 
 function handleButtonClick(event) {

@@ -38,6 +38,7 @@ button {
 .display span {
     color: lime;
     font-size: 50px;
+    overflow: auto;
 }
 
 .buttons-top {
