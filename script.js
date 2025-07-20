@@ -1,6 +1,8 @@
 const calculationState = [];
 let currentOperand = "";
 
+const display = document.querySelector(".display span");
+
 function addOperand() {
     if (currentOperand === "") return;
 
@@ -72,12 +74,27 @@ function evaluate() {
     const a = +calculationState.pop();
 
     calculationState.push(calculateExpression(a, b, operator));
-    console.log(calculationState[0]);
 }
 
 function clearAll() {
     calculationState.length = 0;
     currentOperand = "";
+}
+
+function populateDisplay() {
+    if (currentOperand === "" && calculationState.length === 0) {
+        display.textContent = "|";
+        return;
+    }
+
+    const expressionText = calculationState.reduce((prev, curr) => prev + curr, "");
+    let displayText = expressionText + currentOperand;
+
+    if (calculationState.length === 1 && currentOperand !== "" && !isOperator(currentOperand.at(-1))) {
+        displayText = currentOperand;
+    }
+
+    display.textContent = displayText;
 }
 
 function handleButtonClick(event) {
@@ -96,6 +113,8 @@ function handleButtonClick(event) {
             evaluate();
             break;
     }
+
+    populateDisplay();
 }
 
 document.querySelector(".calculator-container").addEventListener("click", handleButtonClick);
