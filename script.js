@@ -40,7 +40,7 @@ function addOperator(operator) {
 }
 
 function constructOperand(input) {
-    if (input === "0" && (currentOperand.length === 0 || isOperator(currentOperand))) return;
+    if (input === "." && currentOperand.search("\\.") > -1) return;
 
     if (input.length + currentOperand.length > 17) return;
 
@@ -64,7 +64,7 @@ function calculateExpression(a, b, operator) {
             break;
     }
 
-    return result;
+    return result.toFixed(2);
 }
 
 function evaluate() {
@@ -73,6 +73,8 @@ function evaluate() {
     const b = +calculationState.pop();
     const operator = calculationState.pop();
     const a = +calculationState.pop();
+
+    if (b === 0) return;
 
     calculationState.push(calculateExpression(a, b, operator));
 }
