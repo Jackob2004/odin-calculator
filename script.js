@@ -26,16 +26,17 @@ function addOperator(operator) {
         return;
     }
 
-    if (!isOperator(currentOperand.at(-1))) {
-        addOperand();
-        evaluate();
-        calculationState.push(operator);
+    if (calculationState.length === 0 && (currentOperand === "" || isOperator(currentOperand))) {
+        if (operator === "+" || operator === "-") {
+            currentOperand = operator;
+        }
+
         return;
     }
 
-    if (operator === "*" || operator === "/") return;
-
-    currentOperand = operator;
+    addOperand();
+    evaluate();
+    calculationState.push(operator);
 }
 
 function constructOperand(input) {
@@ -117,4 +118,11 @@ function handleButtonClick(event) {
     populateDisplay();
 }
 
+function animatePrompt() {
+    if (currentOperand !== "" || calculationState.length !== 0) return;
+
+    display.textContent = (display.textContent === "") ? "|" : "";
+}
+
 document.querySelector(".calculator-container").addEventListener("click", handleButtonClick);
+setInterval(animatePrompt, 600);
