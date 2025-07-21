@@ -12,14 +12,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: radial-gradient(circle,rgba(24, 28, 20, 1) 0%, rgba(60, 61, 55, 1) 100%);
 }
 
 button {
+    font-size: 25px;
     font-weight: bold;
+    border: none;
+    border-radius: 5px;
+}
+button:hover {
+    opacity: 0.7;
 }
 
 .calculator-container {
-    background-color: darkgray;
+    background-color: #3C3D37;
     width: 400px;
     height: 600px;
     padding: 10px;
@@ -29,16 +36,18 @@ button {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: black;
+    background-color: #181C14;
     width: 100%;
     height: 100px;
     padding: 20px;
 }
 
 .display span {
-    color: lime;
+    color: #ECDFCC;
     font-size: 50px;
     overflow: auto;
+    scrollbar-color: #3C3D37 #697565;
+    scrollbar-width: thin;
 }
 
 .buttons-top {
@@ -47,17 +56,15 @@ button {
     margin-top: 10px;
 }
 
-.buttons-top .btn-clear {
-    background-color: darkred;
+.buttons-top button {
     height: 85px;
     flex: 1;
+    background-color: #697565;
+    color: #ecdfcc;
 }
 
-.buttons-top .btn-backspace {
-    background-color: orange;
-    height: 85px;
-    margin-left: auto;
-    flex: 1;
+.buttons-top .btn-clear {
+    background-color: #a15454;
 }
 
 .buttons-bottom {
@@ -71,12 +78,10 @@ button {
     width: 85px;
     height: 85px;
     flex: auto;
+    background-color: #697565;
+    color: #ecdfcc;
 }
 
 .buttons-bottom .btn-eval {
-    background-color: green;
-}
-
-.btn-operator {
-    background-color: yellow;
+    background-color: #6c8f44;
 }

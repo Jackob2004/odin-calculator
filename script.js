@@ -39,9 +39,14 @@ function addOperator(operator) {
 }
 
 function constructOperand(input) {
+    if (input.length + currentOperand.length > 17) return;
+
     if (input === "." && currentOperand.search("\\.") > -1) return;
 
-    if (input.length + currentOperand.length > 17) return;
+    if (currentOperand.length < 2 && currentOperand[0] === "0" && input !== ".") {
+        currentOperand = input;
+        return;
+    }
 
     currentOperand += input;
 }
@@ -119,13 +124,11 @@ function backspace() {
 function choseAction(value) {
     if ((value >= "0" && value <= "9") || value === ".") {
         constructOperand(value);
-        console.log("test")
         return;
     }
 
     if (value === "*" || value === "/" || value === "+" || value === "-") {
         addOperator(value);
-
         return;
     }
 
