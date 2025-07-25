@@ -124,25 +124,13 @@ function backspace() {
 function choseAction(value) {
     if ((value >= "0" && value <= "9") || value === ".") {
         constructOperand(value);
-        return;
-    }
-
-    if (value === "*" || value === "/" || value === "+" || value === "-") {
+    } else if (value === "*" || value === "/" || value === "+" || value === "-") {
         addOperator(value);
-        return;
-    }
-
-    if (value === "escape") {
+    } else if (value === "escape") {
         clearAll();
-        return;
-    }
-
-    if (value === "backspace") {
+    } else if (value === "backspace") {
         backspace();
-        return;
-    }
-
-    if (value === "=") {
+    } else if (value === "=") {
         evaluate();
     }
 }
