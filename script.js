@@ -3,6 +3,10 @@ let currentOperand = "";
 
 const display = document.querySelector(".display span");
 
+const MAX_DISPLAY_TEXT_LENGTH = 14;
+const MAX_NUMBER_OF_DECIMALS = 17;
+const MIN_CALCULATION_ITEMS = 3;
+
 function addOperand() {
     if (currentOperand === "") return;
 
@@ -21,11 +25,13 @@ function isOperator(value) {
 }
 
 function addOperator(operator) {
+    // Supports switching operator if one is entered already
     if (currentOperand === "" && isOperator(calculationState.at(-1))) {
         calculationState[calculationState.length - 1] = operator;
         return;
     }
 
+    // Enable placing "+" or "-" before the first operand and prevent the same operation with "*" or "/"
     if (calculationState.length === 0 && (currentOperand === "" || isOperator(currentOperand))) {
         if (operator === "+" || operator === "-") {
             currentOperand = operator;
@@ -39,10 +45,12 @@ function addOperator(operator) {
 }
 
 function constructOperand(input) {
-    if (input.length + currentOperand.length > 17) return;
+    if (input.length + currentOperand.length > MAX_NUMBER_OF_DECIMALS) return;
 
+    // Allow only one "." in an operand
     if (input === "." && currentOperand.search("\\.") > -1) return;
 
+    // Allow only one leading "0" in an operand
     if (currentOperand.length < 2 && currentOperand[0] === "0" && input !== ".") {
         currentOperand = input;
         return;
@@ -73,7 +81,7 @@ function calculateExpression(a, b, operator) {
 
 function evaluate() {
     addOperand();
-    if (calculationState.length < 3) return;
+    if (calculationState.length < MIN_CALCULATION_ITEMS) return;
 
     const b = +calculationState.pop();
     const operator = calculationState.pop();
@@ -93,13 +101,14 @@ function populateDisplay() {
     const expressionText = calculationState.reduce((prev, curr) => prev + curr, "");
     let displayText = expressionText + currentOperand;
 
+    // Display only newly entered number in place of evaluated expression
     if (calculationState.length === 1 && currentOperand !== "" && !isOperator(currentOperand.at(-1))) {
         displayText = currentOperand;
     }
 
     display.textContent = displayText;
 
-    if (displayText.length >= 14) {
+    if (displayText.length >= MAX_DISPLAY_TEXT_LENGTH) {
         display.scrollTo({left: display.scrollWidth, behavior: "instant" });
     }
 }

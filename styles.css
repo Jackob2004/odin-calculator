@@ -54,32 +54,32 @@ button:hover {
     scrollbar-width: thin;
 }
 
-.buttons-top {
+.buttons-top-container {
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
 
-.buttons-top button {
+.buttons-top-container button {
     flex: 1;
 }
 
-.buttons-top .btn-clear {
+.buttons-top-container .btn-clear {
     background-color: #a15454;
 }
 
-.buttons-bottom {
+.buttons-bottom-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 10px;
 }
 
-.buttons-bottom button {
+.buttons-bottom-container button {
     width: 85px;
     flex: auto;
 }
 
-.buttons-bottom .btn-eval {
+.buttons-bottom-container .btn-eval {
     background-color: #6c8f44;
 }
